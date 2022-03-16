@@ -11,6 +11,7 @@ export default function TopAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          {/* App bar: Logo and Logo Title */}
           <IconButton size="large" color="inherit" aria-label="menu">
             <MenuIcon sx={{ mr: 1 }} />
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
