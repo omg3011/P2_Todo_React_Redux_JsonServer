@@ -18,6 +18,7 @@ const TodoList = () => {
       <List>
         {todos.map((item) => (
           <TodoItem
+            key={item.id}
             id={item.id}
             title={item.title}
             description={item.description}

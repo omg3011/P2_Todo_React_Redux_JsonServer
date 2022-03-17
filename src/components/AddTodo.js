@@ -1,65 +1,59 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Controller, useForm } from "react-hook-form";
+import { Button, Card, CardContent, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Box } from "@mui/system";
+import { addTodo } from "../redux/todoSlice";
+import { useDispatch } from "react-redux";
 
 const AddTodo = () => {
-  const [value, setValue] = React.useState("");
-  const { handleSubmit, reset, control } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    const value = data.title;
+
+    if (value) {
+      dispatch(addTodo({ title: value }));
+
+      reset({
+        title: "",
+      });
+    }
   };
-
-  const handleSubmit = () => {
-    console.log(value);
-  };
-
-  const handleReset = () => setValue("");
 
   return (
-    <Card
-      sx={{
-        padding: "10px",
-        margin: "20px auto",
-      }}
-    >
-      <CardContent> 
-        <Typography
-          variant="h5"
-          color="text.secondary"
-          sx={{ display: "flex" }}
-          gutterBottom
-        >
-          Add New Todo
+    <Card sx={{ marginTop: "20px" }}>
+      <CardContent>
+        {/* Title */}
+        <Typography variant="h5" sx={{ margin: "10px 0 10px 0px" }}>
+          Add new todo
         </Typography>
 
-        <TextField
-          id="outlined-multiline-flexible"
-          label="Enter new todo's"
-          multiline
-          maxRows={4}
-          value={value}
-          onChange={handleChange}
-          sx={{ width: "100%" }}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Form: Input */}
+          <TextField
+            id="outlined-basic"
+            name="title"
+            label="Enter a new task..."
+            variant="outlined"
+            fullWidth
+            {...register("title", { required: "Title is required." })}
+            error={Boolean(errors.title)}
+            helperText={errors.title?.message}
+          />
 
-        <Box
-          sx={{
-            marginTop: "15px",
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "end",
-          }}
-        >
-          <Button variant="contained" onClick={handleSubmit}>
-            Add
-          </Button>
-        </Box>
+          {/* Submit Form */}
+          <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Button type="submit">Add</Button>
+          </Box>
+        </form>
       </CardContent>
     </Card>
   );
