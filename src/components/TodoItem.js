@@ -12,7 +12,13 @@ import {
 } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
-import { toggleCompleted, deleteTodo, editTodo } from "../redux/todoSlice";
+import {
+  toggleCompleted,
+  deleteTodo,
+  editTodo,
+  toggleCompleteAsync,
+  deleteTodoAsync,
+} from "../redux/todoSlice";
 
 const TodoItem = ({ id, title, completed }) => {
   const dispatch = useDispatch();
@@ -29,7 +35,8 @@ const TodoItem = ({ id, title, completed }) => {
   };
 
   const handleCheckboxClick = () => {
-    dispatch(toggleCompleted({ id, completed: !completed }));
+    completed = !completed;
+    dispatch(toggleCompleteAsync({ id, completed: completed }));
   };
 
   const handleEditClick = () => {
@@ -37,7 +44,7 @@ const TodoItem = ({ id, title, completed }) => {
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteTodo({ id }));
+    dispatch(deleteTodoAsync({ id }));
   };
 
   return (

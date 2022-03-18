@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/system";
-import { addTodo } from "../redux/todoSlice";
+import { addTodo, addTodoAsync } from "../redux/todoSlice";
 import { useDispatch } from "react-redux";
 
 const AddTodo = () => {
@@ -20,7 +20,7 @@ const AddTodo = () => {
     const value = data.title;
 
     if (value) {
-      dispatch(addTodo({ title: value }));
+      dispatch(addTodoAsync({ title: value }));
 
       reset({
         title: "",
